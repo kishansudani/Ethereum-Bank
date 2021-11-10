@@ -57,7 +57,7 @@ contract ETHBank {
         emit tokenWithdrawalComplete(_tokenAddress, amount);
     }
 
-    function withDrawAmount(address _tokenAddress, uint256 amount) public {
+    function withDrawAmount(address _tokenAddress, uint256 amount) public checkAddress(_tokenAddress) {
         require(userTokenBalance[msg.sender][_tokenAddress] >= amount);
         IERC20(_tokenAddress).transfer(msg.sender, amount);
         emit tokenWithdrawalComplete(_tokenAddress, amount);
@@ -82,4 +82,6 @@ contract ETHBank {
         ethAmount[msg.sender] = 0;
         emit ethWithDrawSuccessFully(msg.sender, amount);
     }
+
+    receive() external payable {}
 }
