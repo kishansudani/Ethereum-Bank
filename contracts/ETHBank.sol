@@ -54,6 +54,7 @@ contract ETHBank {
         require(userTokenBalance[msg.sender][_tokenAddress] >= 0);
         uint256 amount = userTokenBalance[msg.sender][_tokenAddress];
         IERC20(_tokenAddress).transfer(msg.sender, amount);
+        userTokenBalance[msg.sender][_tokenAddress] = 0;
         emit tokenWithdrawalComplete(_tokenAddress, amount);
     }
 
