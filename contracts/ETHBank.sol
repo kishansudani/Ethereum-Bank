@@ -85,5 +85,12 @@ contract ETHBank {
         emit ethWithDrawSuccessFully(msg.sender, amount);
     }
 
+    function withDrawETHAmount(uint256 amount) public {
+        require(ethAmount[msg.sender] >= amount, "You can not withdraw amount more than you deposit");
+        require(payable(msg.sender).call{value: amount}(""));
+        ethAmount[msg.sender] -= amount;
+        emit ethWithDrawSuccessFully(msg.sender, amount);
+    }
+
     receive() external payable {}
 }
