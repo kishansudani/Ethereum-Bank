@@ -43,7 +43,7 @@ contract ETHBank {
 
     function depositToken(address _tokenAddress, uint256 amount) public checkAddress(_tokenAddress) {
         require(IERC20(_tokenAddress).balanceOf(msg.sender) >= amount, "Your token amount must be greater then you are trying to deposit");
-        IERC20(_tokenAddress).transfer(address(this), amount);
+        require(IERC20(_tokenAddress).transferFrom(msg.sender, address(this), amount));
         userTokenBalance[msg.sender][_tokenAddress] += amount;
         emit tokenDepositComplete(_tokenAddress, amount);
     }
